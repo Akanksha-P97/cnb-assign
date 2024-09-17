@@ -1,0 +1,292 @@
+<div class="main-container">
+    <p-sidebar [visible]="true" position="left" [modal]="false" styleClass="sidebar-fixed">
+        <ul class="sidebar-menu">
+            <li>
+                <button class="sidebar-icon"></button>
+            </li>
+            <li>
+                <button class="search-icon"></button>
+            </li>
+            <li>
+                <button class="custom-icon icon-3"></button>
+            </li>
+            <li>
+                <button class="custom-icon icon-4"></button>
+            </li>
+            <li>
+                <i class="pi pi-shield"></i>
+            </li>
+            <li>
+                <button class="custom-icon icon-6"></button>
+            </li>
+            <li>
+                <button class="custom-icon icon-7"></button>
+            </li>
+            <li>
+                <button class="custom-icon icon-8"></button>
+            </li>
+            <li style="margin-top: 50px;">
+                <button class="custom-icon icon-9"></button>
+            </li>
+            <li>
+                <button class="custom-icon icon-10"></button>
+            </li>
+            <li>
+                <button class="custom-icon icon-11"></button>
+            </li>
+        </ul>
+    </p-sidebar>
+    <div>
+        <div class="header">Admin</div>
+        <div style="float: right;">
+            <span class="p-input-icon-right">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText [(ngModel)]="searchTerm" (input)="filter()"
+                    placeholder="Search by user & email" />
+            </span>
+        </div>
+    </div>
+    <p-toast />
+    <p-tabView>
+        <p-tabPanel header="Users">
+            <p-toolbar styleClass="mb-4 gap-2" class="toolbar-bg">
+                <ng-template pTemplate="left" class="user-count">
+                    <span class="mr-2">Total Users: {{totalUsers}}</span>
+                    <span class="mr-2 active-user">Active: {{activeUsers}}</span>
+                    <span class="mr-2 inactive-user">Inactive: {{inactiveUsers}}</span>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <button pButton class="filter-button mr-2 inline-block">
+                        <span class="button-icon"></span>
+                        <span class="button-text">Filter</span>
+                    </button>
+                    <p-button label="Add New User" icon="pi pi-plus" class="mr-2" (onClick)="openNew()" />
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['name', 'username']"
+                [tableStyle]="{ 'min-width': '75rem'}" [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 4rem">
+                            <p-tableHeaderCheckbox />
+                        </th>
+                        <th style="width: 4rem">
+                            Sl. No
+                        </th>
+                        <th pSortableColumn="name" style="min-width:15rem">
+                            Name <p-sortIcon field="name" />
+                        </th>
+                        <th pSortableColumn="username">
+                            User Name <p-sortIcon field="username" />
+                        </th>
+                        <th pSortableColumn="email">
+                            Email <p-sortIcon field="email" />
+                        </th>
+                        <th pSortableColumn="phone" style="min-width:10rem">
+                            Phone <p-sortIcon field="phone" />
+                        </th>
+                        <th pSortableColumn="status">
+                            Status <p-sortIcon field="status" />
+                        </th>
+                        <th pSortableColumn="locked" style="min-width:10rem">
+                            Locked <p-sortIcon field="locked" />
+                        </th>
+                        <th pSortableColumn="admin" style="min-width:10rem">
+                            Admin <p-sortIcon field="admin" />
+                        </th>
+                        <th pSortableColumn="role" style="min-width:10rem">
+                            Role <p-sortIcon field="role" />
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product let-i="rowIndex">
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="product" />
+                        </td>
+                        <td>
+                            {{ i + 1 }}
+                        </td>
+                        <td>
+                            {{ product.name }}
+                        </td>
+                        <td>
+                            {{ product.username}}
+                        </td>
+                        <td>
+                            {{ product.email }}
+                        </td>
+                        <td>
+                            {{ product.phone }}
+                        </td>
+                        <td>
+                            {{ product.status}}
+                        </td>
+                        <td>
+                            <p-tag [value]="product.locked" [severity]="getSeverity(product.locked)" />
+                        </td>
+                        <td>{{product.admin ? 'Yes' : 'No'}}</td>
+                        <td>{{product.role}}</td>
+                        <td>
+                            <p-button icon="pi pi-ellipsis-h" [rounded]="true" (onClick)="editProduct(product)" />
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        In total there are {{ products ? products.length : 0 }} products.
+                    </div>
+                </ng-template>
+            </p-table>
+            <p-dialog [(visible)]="addUserDialog" [style]="{ width: '450px' }" header="Create New User" [modal]="true"
+                styleClass="p-fluid">
+                <ng-template pTemplate="content">
+                    <div class="form-grid">
+                        <div class="field name">
+                            <label for="name">Name<span class="required">*</span></label>
+                            <input type="text" pInputText id="name" [(ngModel)]="user.name" required autofocus />
+                            <small class="p-error" *ngIf="submitted && !user.name">
+                                Name is required.
+                            </small>
+                        </div>
+                        <div class="field email">
+                            <label for="name">Email<span class="required">*</span></label>
+                            <input type="text" pInputText id="email" [(ngModel)]="user.email" required autofocus />
+                            <small class="p-error" *ngIf="submitted && !user.email">
+                                Email is required.
+                            </small>
+                        </div>
+                        <div class="field phone">
+                            <label for="phone">Phone Number<span class="required">*</span></label>
+                            <p-inputNumber id="phone" [(ngModel)]="user.phone" />
+                            <small class="p-error" *ngIf="submitted && !user.phone">
+                                Phone number is required.
+                            </small>
+                        </div>
+                        <div class="field login-mode">
+                            <label class="mb-3">Login Mode<span class="required">*</span></label>
+                            <div class="formgrid grid">
+                                <div class="field-radiobutton col-6">
+                                    <p-radioButton id="category1" name="loginMode" value="EmailMode"
+                                        [(ngModel)]="user.loginMode" />
+                                    <label for="category1">Email</label>
+                                </div>
+                                <div class="field-radiobutton col-6">
+                                    <p-radioButton id="category2" name="loginMode" value="PhoneMode"
+                                        [(ngModel)]="user.loginMode" />
+                                    <label for="category2">Phone</label>
+                                </div>
+                            </div>
+                            <small class="p-error" *ngIf="submitted && !user.loginMode">
+                                Login mode is required.
+                            </small>
+                        </div>
+                        <div class="field">
+                            <label for="role">Choose Role<span class="required">*</span></label>
+                            <p-dropdown [(ngModel)]="user.role" inputId="role" [options]="statuses">
+                                <ng-template pTemplate="selectedItem">
+                                    <p-tag [value]="user.role?.toUpperCase() || 'UNKNOWN'"
+                                        [severity]="getSeverity(user.role?.toUpperCase() || 'UNKNOWN')" />
+                                </ng-template>
+                                <ng-template let-option pTemplate="item">
+                                    <p-tag [value]="option.label" [severity]="getSeverity(option.label)" />
+                                </ng-template>
+                            </p-dropdown>
+                            <small class="p-error" *ngIf="submitted && !user.role">
+                                Role is required.
+                            </small>
+                        </div>
+                        <div class="field">
+                            <input type="checkbox" id="makeAdmin" [(ngModel)]="user.admin" />
+                            <label for="makeAdmin">Make Admin</label>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <div class="button-row">
+                        <p-button label="Cancel" class="cancel-btn" icon="pi pi-times" [text]="true"
+                            (onClick)="hideDialog()" />
+                        <p-button label="Add" [style]="{ color: '#ffffff' }" class="add-btn" icon="pi pi-check"
+                            [text]="true" (onClick)="addUser()" [disabled]="!isFormValid()" />
+                    </div>
+                </ng-template>
+            </p-dialog>
+            <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Edit User" [modal]="true"
+                styleClass="p-fluid">
+                <ng-template pTemplate="content">
+                    <div class="form-grid">
+                        <div class="field name">
+                            <label for="name">Name <span class="required">*</span></label>
+                            <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus />
+                            <small class="p-error" *ngIf="submitted && !product.name">
+                                Name is required.
+                            </small>
+                        </div>
+                        <div class="field email">
+                            <label for="name">Email<span class="required">*</span></label>
+                            <input type="text" pInputText id="email" [(ngModel)]="product.email" required autofocus />
+                            <small class="p-error" *ngIf="submitted && !product.email">
+                                Email is required.
+                            </small>
+                        </div>
+                        <div class="field phone">
+                            <label for="phone">Phone Number<span class="required">*</span></label>
+                            <input type="text" pInputText id="phone" [(ngModel)]="product.phone" />
+                            <small class="p-error" *ngIf="submitted && !product.phone">
+                                Phone number is required.
+                            </small>
+                        </div>
+                        <div class="field login-mode">
+                            <label>Login Mode <span class="required">*</span></label>
+                            <div class="formgrid grid">
+                                <div class="field-radiobutton col-6">
+                                    <p-radioButton id="category1" name="category" value="EmailMode"
+                                        [(ngModel)]="user.loginMode" />
+                                    <label for="category1">Email</label>
+                                </div>
+                                <div class="field-radiobutton col-6">
+                                    <p-radioButton id="category2" name="category" value="PhoneMode"
+                                        [(ngModel)]="user.loginMode" />
+                                    <label for="category2">Phone</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="role">Choose Role <span class="required">*</span></label>
+                            <p-dropdown [(ngModel)]="product.role" inputId="role" [options]="statuses">
+                                <ng-template pTemplate="selectedItem">
+                                    <p-tag [value]="product.role?.toUpperCase() || 'UNKNOWN'"
+                                        [severity]="getSeverity(product.role?.toUpperCase() || 'UNKNOWN')" />
+                                </ng-template>
+                                <ng-template let-option pTemplate="item">
+                                    <p-tag [value]="option.label" [severity]="getSeverity(option.label)" />
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                        <div class="field">
+                            <input type="checkbox" id="makeAdmin" [(ngModel)]="product.admin" />
+                            <label for="makeAdmin">Make Admin</label>
+                        </div>
+                        <div class="field mt-2" *ngIf="product.role">
+                            <p-tag [value]="product.role" [severity]="getSeverity(product.role)"></p-tag>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <div class="button-row">
+                        <p-button label="Cancel" icon="pi pi-times" [text]="true" (onClick)="hideDialog()"
+                            class="cancel-btn" />
+                        <p-button label="Update" [style]="{ color: '#ffffff' }" class="add-btn" icon="pi pi-check"
+                            [text]="true" (onClick)="updateUser()" />
+                    </div>
+                </ng-template>
+            </p-dialog>
+            <p-confirmDialog [style]="{ width: '450px' }" />
+        </p-tabPanel>
+        <p-tabPanel header="Roles & Permission">
+        </p-tabPanel>
+    </p-tabView>
+</div>

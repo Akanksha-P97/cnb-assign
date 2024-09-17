@@ -1,0 +1,227 @@
+.filter-button {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #CBD2D9;
+    padding: 0.655rem 1rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.button-icon {
+    background: url('../assets/icons/filter.png') no-repeat center center;
+    background-size: 16px 16px;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+.button-text {
+    display: inline-block;
+}
+
+.user-count {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.active-user {
+    color: #01BA65;
+}
+
+.inactive-user {
+    color: #E30034;
+}
+
+.p-toolbar {
+    border: none !important;
+    background: none !important;
+}
+
+.header {
+    margin-bottom: 1rem;
+    margin-left: 85px;
+}
+
+.sidebar-fixed {
+    width: 80px;
+    height: 100vh;
+    position: fixed;
+    background-color: #f4f4f4;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.sidebar-menu li {
+    margin: 18px 0;
+}
+
+.content {
+    margin-left: 80px;
+    padding: 20px;
+    width: calc(100% - 80px);
+}
+
+::ng-deep .p-sidebar-left {
+    width: 6.25rem !important;
+    background: #001925;
+}
+
+::ng-deep .p-tabview.p-component {
+    margin-left: 6rem !important;
+}
+
+.custom-tab-view {
+    max-height: 500px;
+    height: 500px;
+    overflow-y: hidden;
+}
+
+.sidebar-icon {
+    background: url('../assets/icons/Sheild.png') no-repeat center center;
+    background-size: 25px 30px;
+    width: 30px;
+    height: 30px;
+    border: none;
+}
+
+.search-icon {
+    background: url('../assets/icons/search.png') no-repeat center center;
+    background-size: 25px 30px;
+    width: 30px;
+    height: 30px;
+    border: none;
+}
+
+.icon-3 {
+    background: url('../assets/icons/icon_3.png') no-repeat center center;
+}
+
+.icon-4 {
+    background: url('../assets/icons/icon_4.png') no-repeat center center;
+}
+
+.icon-6 {
+    background: url('../assets/icons/icon_6.png') no-repeat center center;
+}
+
+.icon-7 {
+    background: url('../assets/icons/icon_7.png') no-repeat center center;
+}
+
+.icon-8 {
+    background: url('../assets/icons/icon_8.png') no-repeat center center;
+}
+
+.icon-9 {
+    background: url('../assets/icons/icon_9.png') no-repeat center center;
+}
+
+.icon-10 {
+    background: url('../assets/icons/icon_10.png') no-repeat center center;
+}
+
+.icon-11 {
+    background: url('../assets/icons/icon_11.png') no-repeat center center;
+}
+
+.custom-icon {
+    background-size: 20px 20px;
+    width: 20px;
+    height: 20px;
+    border: none;
+}
+
+::ng-deep .p-icon {
+    display: none;
+}
+
+::ng-deep .p-sidebar .p-sidebar-header {
+    padding: 0rem;
+}
+
+.sidebar-bg {
+    background: url('../assets/icons/sidebar_bg.png') no-repeat center center;
+    background-size: 25px 30px;
+    width: 30px;
+    height: 30px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+}
+
+.field.name {
+    grid-column: 1;
+}
+
+.field.email {
+    grid-column: 2;
+}
+
+.field.phone {
+    grid-column: 1;
+}
+
+.field.login-mode {
+    grid-column: 2;
+}
+
+.field:nth-child(5) {
+    grid-column: 1 / span 2;
+}
+
+.field:nth-child(6) {
+    grid-column: 1 / span 2;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.cancel-btn {
+    border: 1px solid #CBD2D9;
+}
+
+::ng-deep button.p-ripple.p-element.p-button.p-component.p-button-text {
+    color: #37372D;
+    width: 100px;
+}
+
+.add-btn {
+    border: 1px solid #19B5FE;
+    background-color: #19B5FE;
+}
+
+span.p-button-label.ng-star-inserted {
+    color: white !important;
+}
+
+p-button.p-element.add-btn {
+    margin-left: 10px !important;
+}
+
+.button-row p-button {
+    margin: 0;
+}
+
+.required {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
+}
